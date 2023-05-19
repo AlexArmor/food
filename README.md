@@ -1,1 +1,1 @@
-Training PET project on native JavaScript
+Training PET project with using native JavaScript
