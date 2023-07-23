@@ -1,18 +1,18 @@
-function slider() {
+function slider({ container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field }) {
     //Slider
 
     let offset = 0;
     let slideIndex = 1;
 
-    const slides = document.querySelectorAll('.offer__slide'),
-        slider = document.querySelector('.offer__slider'),
-        prev = document.querySelector('.offer__slider-prev'),
-        next = document.querySelector('.offer__slider-next'),
-        total = document.querySelector('#total'),
-        current = document.querySelector('#current'),
-        slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+    const slides = document.querySelectorAll(slide),
+        slider = document.querySelector(container),
+        prev = document.querySelector(prevArrow),
+        next = document.querySelector(nextArrow),
+        total = document.querySelector(totalCounter),
+        current = document.querySelector(currentCounter),
+        slidesWrapper = document.querySelector(wrapper),
         width = window.getComputedStyle(slidesWrapper).width,
-        slidesField = document.querySelector('.offer__slider-inner');
+        slidesField = document.querySelector(field);
 
     if (slides.length < 10) {
         total.textContent = `0${slides.length}`;
@@ -35,7 +35,7 @@ function slider() {
     slider.style.position = 'relative';
 
     const indicators = document.createElement('ol');
-    dots = [];
+    const dots = [];
     indicators.classList.add('carousel-indicators');
     slider.append(indicators);
 
@@ -51,13 +51,16 @@ function slider() {
     }
 
     next.addEventListener('click', () => {
-        if (offset === deleteAllNonNumbers(width) * (slides.length - 1)) {
+        if (offset === (deleteAllNonNumbers(width) * (slides.length - 1))) {
             offset = 0;
         } else {
             offset += deleteAllNonNumbers(width);
         }
 
         slidesField.style.transform = `translateX(-${offset}px)`;
+
+        console.log("slideIndex", slideIndex);
+        console.log("slides.length", slides.length);
 
         if (slideIndex === slides.length) {
             slideIndex = 1;
@@ -108,7 +111,7 @@ function slider() {
         dot.addEventListener('click', (e) => {
             const slideTo = e.target.getAttribute('data-slide-to');
 
-            slideIndex = slideTo;
+            slideIndex = Number(slideTo);
             offset = deleteAllNonNumbers(width) * (slideTo - 1);
 
             slidesField.style.transform = `translateX(-${offset}px)`;
@@ -144,4 +147,4 @@ function slider() {
     }
 };
 
-module.exports = slider;
+export default slider;
